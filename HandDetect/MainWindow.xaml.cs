@@ -40,6 +40,7 @@ namespace HandDetect
                 rbDBG.Checked += rbDBG_Checked;
                 rbSD.Checked += rbSD_Checked;
                 rbFD.Checked += rbFD_Checked;
+                rbSDFD.Checked += rbSDFD_Checked;
 
                 txtBlurFactor.TextChanged += txtBlurFactor_TextChanged;
                 chkBlur.Checked += chkBlur_Checked;
@@ -151,6 +152,22 @@ namespace HandDetect
                 for (int i = 0; i < nCameraCount; i++)
                 {
                     ((Camera)Cameras[i]).WorkType = 2;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void rbSDFD_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < nCameraCount; i++)
+                {
+                    ((Camera)Cameras[i]).WorkType = 3;
                 }
             }
             catch (Exception ex)

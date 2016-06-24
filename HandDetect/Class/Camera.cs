@@ -31,6 +31,10 @@ namespace HandDetect.Class
 
         MainWindow MW = null;
 
+        CascadeClassifier haarCascade = new CascadeClassifier(@"C:\opencv\sources\data\haarcascades_cuda\haarcascade_frontalface_alt_tree.xml");
+        //CascadeClassifier haarCascade = new CascadeClassifier(@"C:\opencv\sources\data\haarcascades_cuda\haarcascade_frontalface_alt2.xml");
+        Rect[] faces;
+
         public bool IsBlur = false;
         public int nBlurFactor = 10;
 
@@ -158,6 +162,38 @@ namespace HandDetect.Class
                         }
 
                         Cv2.ImShow(index.ToString(), background);
+
+                        int c = Cv2.WaitKey(10);
+
+                        if (c != -1) { break; }
+                    }
+                    else if (WorkType == 2)
+                    {
+                        Cv2.CvtColor(source, gray, ColorConversionCodes.BGR2GRAY);
+
+                        if (this.IsBlur)
+                        {
+                            Cv2.Blur(source, source, new Size(nBlurFactor * 3, nBlurFactor * 3));
+                        }
+                        
+                        faces = haarCascade.DetectMultiScale(gray, 1.08, 2, HaarDetectionType.ScaleImage, new OpenCvSharp.Size(30, 30));
+
+                        foreach (Rect face in faces)
+                        {
+                            var pt1 = new OpenCvSharp.Point
+                            {
+                                X = face.X,
+                                Y = face.Y
+                            };
+                            var pt2 = new OpenCvSharp.Point
+                            {
+                                X = face.X + face.Width,
+                                Y = face.Y + face.Height
+                            };
+                            Cv2.Rectangle(source, pt1, pt2, new Scalar(0, 255, 0), 2);
+                        }
+
+                        Cv2.ImShow(index.ToString(), source);
 
                         int c = Cv2.WaitKey(10);
 
