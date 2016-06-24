@@ -16,6 +16,7 @@
         <WrapPanel Grid.ColumnSpan="3" Grid.RowSpan="2">
             <RadioButton x:Name="rbSD" Content="SkinDetect" Margin="5" IsChecked="True"/>
             <RadioButton x:Name="rbDBG" Content="DeleteBackground" Margin="5"/>
+            <RadioButton x:Name="rbFD" Content="FaceDetect" Margin="5"/>
             <Border BorderThickness="1" BorderBrush="Black" Margin="5">
             <Grid>
                 <Grid.ColumnDefinitions>

@@ -37,6 +37,7 @@ namespace HandDetect.Class
         /// <summary>
         /// 0: DetectSkin
         /// 1: DeleteBackground
+        /// 2: FaceDetect
         /// </summary>
         public int WorkType = 0;
 
@@ -52,6 +53,7 @@ namespace HandDetect.Class
                 if (!capture.IsOpened())
                 {
                     System.Windows.MessageBox.Show("연결 실패");
+                    return;
                 }
 
                 //capture.Set(CaptureProperty.FrameWidth, 640);
@@ -77,28 +79,13 @@ namespace HandDetect.Class
         {
             try
             {
-                Cv2.NamedWindow(index.ToString());
+                Cv2.NamedWindow(index.ToString(), WindowMode.AutoSize);
 
                 while (IsWork)
                 {
                     capture.Read(source);
 
-                    if (WorkType  == 1)
-                    {
-                        bs.Apply(source, background);
-
-                        if(this.IsBlur)
-                        {
-                            Cv2.Blur(background, background, new Size(nBlurFactor, nBlurFactor));
-                        }
-
-                        Cv2.ImShow(index.ToString(), background);
-
-                        int c = Cv2.WaitKey(10);
-
-                        if (c != -1) { break; }
-                    }
-                    else if(WorkType == 0)
+                    if(WorkType == 0)
                     {
                         Cv2.CvtColor(source, YCRCB, ColorConversionCodes.BGR2YCrCb);
 
@@ -156,6 +143,21 @@ namespace HandDetect.Class
 
                         //Cv2.ImShow(index.ToString(), source);
                         Cv2.ImShow(index.ToString(), labelColor);
+
+                        int c = Cv2.WaitKey(10);
+
+                        if (c != -1) { break; }
+                    }
+                    else if (WorkType == 1)
+                    {
+                        bs.Apply(source, background);
+
+                        if (this.IsBlur)
+                        {
+                            Cv2.Blur(background, background, new Size(nBlurFactor, nBlurFactor));
+                        }
+
+                        Cv2.ImShow(index.ToString(), background);
 
                         int c = Cv2.WaitKey(10);
 
