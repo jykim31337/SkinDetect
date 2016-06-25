@@ -35,16 +35,35 @@ namespace HandDetect
         {
             try
             {
+                //grdHSV.Visibility = System.Windows.Visibility.Collapsed;
+
                 btnStart.Click += btnStart_Click;
 
-                rbDBG.Checked += rbDBG_Checked;
-                rbSD.Checked += rbSD_Checked;
+                rbDBGG.Checked += rbDBG_Checked;
+                rbSDYCRCB.Checked += rbSDYCRCB_Checked;
+                rbSDHSV.Checked += rbSDHSV_Checked;
+                rbSDHSV.Unchecked += rbSDHSV_Unchecked;
                 rbFD.Checked += rbFD_Checked;
-                rbSDFD.Checked += rbSDFD_Checked;
+                rbDBGC.Checked += rbSDFD_Checked;
+                rbHD.Checked += rbHD_Checked;
 
                 txtBlurFactor.TextChanged += txtBlurFactor_TextChanged;
                 chkBlur.Checked += chkBlur_Checked;
                 chkBlur.Unchecked += chkBlur_Unchecked;
+
+                txtYCRCBYL.Text = YCRCB.YL.ToString();
+                txtYCRCBYH.Text = YCRCB.YH.ToString();
+                txtYCRCBCRL.Text = YCRCB.CRL.ToString();
+                txtYCRCBCRH.Text = YCRCB.CRH.ToString();
+                txtYCRCBCBL.Text = YCRCB.CBL.ToString();
+                txtYCRCBCBH.Text = YCRCB.CBH.ToString();
+
+                txtYCRCBYL.TextChanged += txtYCRCBYL_TextChanged;
+                txtYCRCBYH.TextChanged += txtYCRCBYH_TextChanged;
+                txtYCRCBCRL.TextChanged += txtYCRCBCRL_TextChanged;
+                txtYCRCBCRH.TextChanged += txtYCRCBCRH_TextChanged;
+                txtYCRCBCBL.TextChanged += txtYCRCBCBL_TextChanged;
+                txtYCRCBCBH.TextChanged += txtYCRCBCBH_TextChanged;
             }
             catch(Exception ex)
             {
@@ -52,6 +71,110 @@ namespace HandDetect
                 MessageBox.Show(err);
             }
         }
+
+        #region YCRCB Text Change
+        void txtYCRCBCBH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int value = 0;
+                if(int.TryParse(txtYCRCBCBH.Text, out value))
+                {
+                    YCRCB.CBH = value;
+                }
+            }
+            catch(Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void txtYCRCBCBL_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int value = 0;
+                if (int.TryParse(txtYCRCBCBL.Text, out value))
+                {
+                    YCRCB.CBL = value;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void txtYCRCBCRH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int value = 0;
+                if (int.TryParse(txtYCRCBCRH.Text, out value))
+                {
+                    YCRCB.CRH = value;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void txtYCRCBCRL_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int value = 0;
+                if (int.TryParse(txtYCRCBCRL.Text, out value))
+                {
+                    YCRCB.CRL = value;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void txtYCRCBYH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int value = 0;
+                if (int.TryParse(txtYCRCBYH.Text, out value))
+                {
+                    YCRCB.YH = value;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void txtYCRCBYL_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                int value = 0;
+                if (int.TryParse(txtYCRCBYL.Text, out value))
+                {
+                    YCRCB.YL = value;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+        #endregion
 
         #region Blur
         void chkBlur_Unchecked(object sender, RoutedEventArgs e)
@@ -113,7 +236,7 @@ namespace HandDetect
 
         #region WorkMode
         
-        void rbSD_Checked(object sender, RoutedEventArgs e)
+        void rbSDYCRCB_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -169,6 +292,58 @@ namespace HandDetect
                 {
                     ((Camera)Cameras[i]).WorkType = 3;
                 }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void rbSDHSV_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < nCameraCount; i++)
+                {
+                    ((Camera)Cameras[i]).WorkType = 4;
+                }
+
+                //grdHSV.Visibility = System.Windows.Visibility.Visible;
+                grdYCRCB.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void rbSDHSV_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //grdHSV.Visibility = System.Windows.Visibility.Collapsed;
+                grdYCRCB.Visibility = System.Windows.Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void rbHD_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < nCameraCount; i++)
+                {
+                    ((Camera)Cameras[i]).WorkType = 5;
+                }
+
+                //grdHSV.Visibility = System.Windows.Visibility.Visible;
+                grdYCRCB.Visibility = System.Windows.Visibility.Collapsed;
             }
             catch (Exception ex)
             {

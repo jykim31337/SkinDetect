@@ -1,12 +1,12 @@
 ﻿<Window x:Class="HandDetect.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="158" Width="297" x:Name="MW">
+        Title="MainWindow" Height="200" Width="500" x:Name="MW">
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -14,11 +14,89 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <WrapPanel Grid.ColumnSpan="3" Grid.RowSpan="2">
-            <RadioButton x:Name="rbSD" Content="SkinDetect" Margin="5" IsChecked="True"/>
-            <RadioButton x:Name="rbDBG" Content="DeleteBackground" Margin="5"/>
+            <RadioButton x:Name="rbSDYCRCB" Content="SkinDetectYCRCB" Margin="5" IsChecked="True"/>
+            <Grid x:Name="grdYCRCB" Margin="5,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Y:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Column="1" x:Name="txtYCRCBYL" Width="30" Margin="5"/>
+                    <TextBox Grid.Column="2" x:Name="txtYCRCBYH" Width="30" Margin="5"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="CR:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Column="1" x:Name="txtYCRCBCRL" Width="30" Margin="5"/>
+                    <TextBox Grid.Column="2" x:Name="txtYCRCBCRH" Width="30" Margin="5"/>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="CB:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Column="1" x:Name="txtYCRCBCBL" Width="30" Margin="5"/>
+                    <TextBox Grid.Column="2" x:Name="txtYCRCBCBH" Width="30" Margin="5"/>
+                </Grid>
+            </Grid>
+            <RadioButton x:Name="rbSDHSV" Content="SkinDetectHSV" Margin="5" />
+            <!--
+            <Grid x:Name="grdHSV" Margin="5,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="H:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Column="1" x:Name="txtHsvHL" Width="30" Margin="5"/>
+                    <TextBox Grid.Column="2" x:Name="txtHsvHH" Width="30" Margin="5"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="S:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Column="1" x:Name="txtHsvSL" Width="30" Margin="5"/>
+                    <TextBox Grid.Column="2" x:Name="txtHsvSH" Width="30" Margin="5"/>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="V:" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Column="1" x:Name="txtHsvVL" Width="30" Margin="5"/>
+                    <TextBox Grid.Column="2" x:Name="txtHsvVH" Width="30" Margin="5"/>
+                </Grid>
+            </Grid>
+            -->
+            <RadioButton x:Name="rbDBGG" Content="DeleteBackgroundGray" Margin="5"/>
+            <RadioButton x:Name="rbDBGC" Content="DeleteBackgroundColor" Margin="5"/>
             <RadioButton x:Name="rbFD" Content="FaceDetect" Margin="5"/>
-            <RadioButton x:Name="rbSDFD" Content="SkinDetectAndFaceDetect" Margin="5"/>
-            <Border BorderThickness="1" BorderBrush="Black" Margin="5">
+            <RadioButton x:Name="rbHD" Content="HandDetect" Margin="5"/>
+            <Border BorderThickness="1" BorderBrush="Black" Margin="0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
