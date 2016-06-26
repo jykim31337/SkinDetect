@@ -64,6 +64,9 @@ namespace HandDetect
                 txtYCRCBCRH.TextChanged += txtYCRCBCRH_TextChanged;
                 txtYCRCBCBL.TextChanged += txtYCRCBCBL_TextChanged;
                 txtYCRCBCBH.TextChanged += txtYCRCBCBH_TextChanged;
+
+                chkLabelColor.Checked += chkLabelColor_Checked;
+                chkLabelColor.Unchecked += chkLabelColor_Unchecked;
             }
             catch(Exception ex)
             {
@@ -234,8 +237,42 @@ namespace HandDetect
 
         #endregion
 
+        #region LabelColor
+        void chkLabelColor_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < nCameraCount; i++)
+                {
+                    ((Camera)Cameras[i]).IsLabelColor = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+
+        void chkLabelColor_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < nCameraCount; i++)
+                {
+                    ((Camera)Cameras[i]).IsLabelColor = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message + "\r\n" + ex.StackTrace;
+                MessageBox.Show(err);
+            }
+        }
+        #endregion
+
         #region WorkMode
-        
+
         void rbSDYCRCB_Checked(object sender, RoutedEventArgs e)
         {
             try
@@ -309,8 +346,7 @@ namespace HandDetect
                     ((Camera)Cameras[i]).WorkType = 4;
                 }
 
-                //grdHSV.Visibility = System.Windows.Visibility.Visible;
-                grdYCRCB.Visibility = System.Windows.Visibility.Collapsed;
+                grdYCRCB.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -323,8 +359,7 @@ namespace HandDetect
         {
             try
             {
-                //grdHSV.Visibility = System.Windows.Visibility.Collapsed;
-                grdYCRCB.Visibility = System.Windows.Visibility.Visible;
+                grdYCRCB.IsEnabled = true;
             }
             catch (Exception ex)
             {
@@ -341,9 +376,6 @@ namespace HandDetect
                 {
                     ((Camera)Cameras[i]).WorkType = 5;
                 }
-
-                //grdHSV.Visibility = System.Windows.Visibility.Visible;
-                grdYCRCB.Visibility = System.Windows.Visibility.Collapsed;
             }
             catch (Exception ex)
             {

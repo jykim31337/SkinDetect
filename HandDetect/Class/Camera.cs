@@ -17,6 +17,7 @@ namespace HandDetect.Class
         Mat imgYCRCB = new Mat();
         Mat imgHSV = new Mat();
         Mat imgGray = new Mat();
+        Mat imgBinary = new Mat();
         Mat imgColor = new Mat();
         //Mat imgBackground = new Mat();
         bool IsWork = true;
@@ -27,6 +28,7 @@ namespace HandDetect.Class
 
         int maxSize = 0;
         Rect maxRect = new Rect();
+        int maxLabelIndex = 0;
 
         BackgroundSubtractorMOG2 bs;
 
@@ -39,11 +41,15 @@ namespace HandDetect.Class
         public bool IsBlur = false;
         public int nBlurFactor = 10;
 
+        public bool IsLabelColor = false;
+
         /// <summary>
-        /// 0: DetectSkin
+        /// 0: DetectSkinYCRCB
         /// 1: DeleteBackgroundGray
         /// 2: FaceDetect
         /// 3: DeleteBackgroundColor
+        /// 4: DetectSkinHSV
+        /// 5: HandDetect
         /// </summary>
         public int WorkType = 0;
         
@@ -97,8 +103,6 @@ namespace HandDetect.Class
 
                         Cv2.InRange(imgYCRCB, new Scalar(YCRCB.YL, YCRCB.CRL, YCRCB.CBL), new Scalar(YCRCB.YH, YCRCB.CRH, YCRCB.CBH), imgGray);
 
-                        //Cv2.Blur(gray, gray, new Size(10, 10));
-
                         Cv2.CvtColor(imgGray, imgColor, ColorConversionCodes.GRAY2BGR);
 
                         if (this.IsBlur)
@@ -108,13 +112,15 @@ namespace HandDetect.Class
 
                         int numOfLables = Cv2.ConnectedComponentsWithStats(imgGray, imgTmpLabels, imgTmpStats, imgTmpCentroids, OpenCvSharp.PixelConnectivity.Connectivity8, MatType.CV_32S);
 
+                        imgBinary = imgGray.Threshold(0, 255, ThresholdTypes.Otsu | ThresholdTypes.Binary);
+
                         maxSize = 0;
                         maxRect = new Rect();
-
+                        
                         //라벨링 된 이미지에 각각 직사각형으로 둘러싸기 
                         for (int j = 1; j < numOfLables; j++)
                         {
-                            //int area = stats.At<int>(j, (int)ConnectedComponentsTypes.Area);
+                            int area = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Area);
                             int left = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Left);
                             int top = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Top);
                             int width = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Width);
@@ -129,11 +135,38 @@ namespace HandDetect.Class
                                 maxRect.Top = top;
                                 maxRect.Width = width;
                                 maxRect.Height = height;
+
+                                double centroidx = imgTmpCentroids.At<double>(j, 0);
+                                double centroidy = imgTmpCentroids.At<double>(j, 1);
+
+                                double pointerGrayCount = (centroidy * 640 * 1) + (centroidx * 1);
+                                double pointerColorCount = (centroidy * 640 * 3) + (centroidx * 3);
                             }
 
                             //Cv2.Rectangle(img_color, new Point(left, top), new Point(left + width, top + height),  new Scalar(0, 0, 255), 1);
                             //Cv2.PutText(img_color, j.ToString(), new Point(left + 20, top + 20),HersheyFonts.HersheySimplex, 1, new Scalar(255, 0, 0), 2);
                         }
+
+                        if (IsLabelColor)
+                        {
+
+                            var labelIndexer = imgTmpLabels.GetGenericIndexer<int>();
+                            var colorIndexer = imgColor.GetGenericIndexer<Vec3b>();
+
+                            Scalar[] colors = Enumerable.Range(0, numOfLables + 1).Select(_ => Scalar.RandomColor()).ToArray();
+                            colors[0] = Scalar.Black;
+
+                            for (int y = 0; y < imgTmpLabels.Rows; y++)
+                            {
+                                for (int x = 0; x < imgTmpLabels.Cols; x++)
+                                {
+                                    maxLabelIndex = labelIndexer[y, x];
+
+                                    colorIndexer[y, x] = colors[maxLabelIndex].ToVec3b();
+                                }
+                            }
+                        }
+
 
                         Cv2.Rectangle(imgColor, new Point(maxRect.Left, maxRect.Top), new Point(maxRect.Left + maxRect.Width, maxRect.Top + maxRect.Height), new Scalar(0, 0, 255), 1);
 
