@@ -34,8 +34,8 @@ namespace HandDetect.Class
 
         MainWindow MW = null;
 
-        CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\..\..\opencv_3.1\sources\data\haarcascades_cuda\haarcascade_frontalface_alt_tree.xml");
-        //CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\..\..\opencv_3.1\sources\data\haarcascades_cuda\haarcascade_frontalface_alt2.xml");
+        CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\haarcascades\haarcascade_frontalface_alt2.xml");
+        //CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\haarcascades\haarcascade_frontalface_alt_tree.xml");
         Rect[] faces;
 
         public bool IsBlur = false;
