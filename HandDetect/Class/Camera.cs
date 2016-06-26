@@ -104,7 +104,7 @@ namespace HandDetect.Class
                         maxSize = 0;
                         maxRect = new Rect();
                         
-                        //라벨링 된 이미지에 각각 직사각형으로 둘러싸기 
+                        //레이블링 된 이미지에 각각 직사각형으로 둘러싸기 
                         for (int j = 1; j < numOfLables; j++)
                         {
                             int area = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Area);
@@ -309,7 +309,7 @@ namespace HandDetect.Class
                         maxSize = 0;
                         maxRect = new Rect();
 
-                        //라벨링 된 이미지에 각각 직사각형으로 둘러싸기 
+                        //레이블링 된 이미지에 각각 직사각형으로 둘러싸기 
                         for (int j = 1; j < numOfLables; j++)
                         {
                             //int area = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Area);
