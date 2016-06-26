@@ -113,10 +113,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="haarcascades\haarcascade_frontalface_alt2.xml">
+    <Resource Include="DATA\haarcascade_frontalface_alt2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="haarcascades\haarcascade_frontalface_alt_tree.xml">
+    <Resource Include="DATA\haarcascade_frontalface_alt_tree.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

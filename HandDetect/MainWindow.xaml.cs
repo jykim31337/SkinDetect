@@ -33,148 +33,107 @@ namespace HandDetect
 
         public void InitControl()
         {
-            try
+            btnStart.Click += btnStart_Click;
+
+            rbDBGG.Checked += rbDBG_Checked;
+            rbSDYCRCB.Checked += rbSDYCRCB_Checked;
+            rbSDHSV.Checked += rbSDHSV_Checked;
+            rbSDHSV.Unchecked += rbSDHSV_Unchecked;
+            rbFD.Checked += rbFD_Checked;
+            rbDBGC.Checked += rbSDFD_Checked;
+            rbHD.Checked += rbHD_Checked;
+
+            txtBlurFactor.TextChanged += txtBlurFactor_TextChanged;
+            chkBlur.Checked += chkBlur_Checked;
+            chkBlur.Unchecked += chkBlur_Unchecked;
+
+            txtYCRCBYL.Text = YCRCB.YL.ToString();
+            txtYCRCBYH.Text = YCRCB.YH.ToString();
+            txtYCRCBCRL.Text = YCRCB.CRL.ToString();
+            txtYCRCBCRH.Text = YCRCB.CRH.ToString();
+            txtYCRCBCBL.Text = YCRCB.CBL.ToString();
+            txtYCRCBCBH.Text = YCRCB.CBH.ToString();
+
+            txtYCRCBYL.TextChanged += txtYCRCBYL_TextChanged;
+            txtYCRCBYH.TextChanged += txtYCRCBYH_TextChanged;
+            txtYCRCBCRL.TextChanged += txtYCRCBCRL_TextChanged;
+            txtYCRCBCRH.TextChanged += txtYCRCBCRH_TextChanged;
+            txtYCRCBCBL.TextChanged += txtYCRCBCBL_TextChanged;
+            txtYCRCBCBH.TextChanged += txtYCRCBCBH_TextChanged;
+
+            chkLabelColor.Checked += chkLabelColor_Checked;
+            chkLabelColor.Unchecked += chkLabelColor_Unchecked;
+
+            txtExposure.TextChanged += txtExposure_TextChanged;
+        }
+
+        #region Exposure
+        void txtExposure_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int value = 0;
+
+            if(int.TryParse(txtExposure.Text, out value))
             {
-                //grdHSV.Visibility = System.Windows.Visibility.Collapsed;
-
-                btnStart.Click += btnStart_Click;
-
-                rbDBGG.Checked += rbDBG_Checked;
-                rbSDYCRCB.Checked += rbSDYCRCB_Checked;
-                rbSDHSV.Checked += rbSDHSV_Checked;
-                rbSDHSV.Unchecked += rbSDHSV_Unchecked;
-                rbFD.Checked += rbFD_Checked;
-                rbDBGC.Checked += rbSDFD_Checked;
-                rbHD.Checked += rbHD_Checked;
-
-                txtBlurFactor.TextChanged += txtBlurFactor_TextChanged;
-                chkBlur.Checked += chkBlur_Checked;
-                chkBlur.Unchecked += chkBlur_Unchecked;
-
-                txtYCRCBYL.Text = YCRCB.YL.ToString();
-                txtYCRCBYH.Text = YCRCB.YH.ToString();
-                txtYCRCBCRL.Text = YCRCB.CRL.ToString();
-                txtYCRCBCRH.Text = YCRCB.CRH.ToString();
-                txtYCRCBCBL.Text = YCRCB.CBL.ToString();
-                txtYCRCBCBH.Text = YCRCB.CBH.ToString();
-
-                txtYCRCBYL.TextChanged += txtYCRCBYL_TextChanged;
-                txtYCRCBYH.TextChanged += txtYCRCBYH_TextChanged;
-                txtYCRCBCRL.TextChanged += txtYCRCBCRL_TextChanged;
-                txtYCRCBCRH.TextChanged += txtYCRCBCRH_TextChanged;
-                txtYCRCBCBL.TextChanged += txtYCRCBCBL_TextChanged;
-                txtYCRCBCBH.TextChanged += txtYCRCBCBH_TextChanged;
-
-                chkLabelColor.Checked += chkLabelColor_Checked;
-                chkLabelColor.Unchecked += chkLabelColor_Unchecked;
-            }
-            catch(Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                for (int i = 0; i < nCameraCount; i++)
+                {
+                    ((Camera)Cameras[i]).SetExpocure(value);
+                }
             }
         }
+        #endregion
 
         #region YCRCB Text Change
         void txtYCRCBCBH_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int value = 0;
+            if (int.TryParse(txtYCRCBCBH.Text, out value))
             {
-                int value = 0;
-                if(int.TryParse(txtYCRCBCBH.Text, out value))
-                {
-                    YCRCB.CBH = value;
-                }
-            }
-            catch(Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                YCRCB.CBH = value;
             }
         }
 
         void txtYCRCBCBL_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int value = 0;
+            if (int.TryParse(txtYCRCBCBL.Text, out value))
             {
-                int value = 0;
-                if (int.TryParse(txtYCRCBCBL.Text, out value))
-                {
-                    YCRCB.CBL = value;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                YCRCB.CBL = value;
             }
         }
 
         void txtYCRCBCRH_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int value = 0;
+            if (int.TryParse(txtYCRCBCRH.Text, out value))
             {
-                int value = 0;
-                if (int.TryParse(txtYCRCBCRH.Text, out value))
-                {
-                    YCRCB.CRH = value;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                YCRCB.CRH = value;
             }
         }
 
         void txtYCRCBCRL_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int value = 0;
+            if (int.TryParse(txtYCRCBCRL.Text, out value))
             {
-                int value = 0;
-                if (int.TryParse(txtYCRCBCRL.Text, out value))
-                {
-                    YCRCB.CRL = value;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                YCRCB.CRL = value;
             }
         }
 
         void txtYCRCBYH_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int value = 0;
+            if (int.TryParse(txtYCRCBYH.Text, out value))
             {
-                int value = 0;
-                if (int.TryParse(txtYCRCBYH.Text, out value))
-                {
-                    YCRCB.YH = value;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                YCRCB.YH = value;
             }
         }
 
         void txtYCRCBYL_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int value = 0;
+            if (int.TryParse(txtYCRCBYL.Text, out value))
             {
-                int value = 0;
-                if (int.TryParse(txtYCRCBYL.Text, out value))
-                {
-                    YCRCB.YL = value;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                YCRCB.YL = value;
             }
         }
         #endregion
@@ -182,56 +141,32 @@ namespace HandDetect
         #region Blur
         void chkBlur_Unchecked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).IsBlur = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).IsBlur = false;
             }
         }
 
         void chkBlur_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).IsBlur = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).IsBlur = true;
             }
         }
 
         void txtBlurFactor_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            int factor = 10;
+
+            if (!int.TryParse(txtBlurFactor.Text, out factor))
             {
-                int factor = 10;
-
-                if (!int.TryParse(txtBlurFactor.Text, out factor))
-                {
-                    return;
-                }
-
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).nBlurFactor = factor;
-                }
+                return;
             }
-            catch (Exception ex)
+
+            for (int i = 0; i < nCameraCount; i++)
             {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).nBlurFactor = factor;
             }
         }
 
@@ -240,33 +175,17 @@ namespace HandDetect
         #region LabelColor
         void chkLabelColor_Unchecked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).IsLabelColor = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).IsLabelColor = false;
             }
         }
 
         void chkLabelColor_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).IsLabelColor = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).IsLabelColor = true;
             }
         }
         #endregion
@@ -275,112 +194,56 @@ namespace HandDetect
 
         void rbSDYCRCB_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for(int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).WorkType = 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).WorkType = 0;
             }
         }
 
         void rbDBG_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).WorkType = 1;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).WorkType = 1;
             }
         }
 
         void rbFD_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).WorkType = 2;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).WorkType = 2;
             }
         }
 
         void rbSDFD_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).WorkType = 3;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).WorkType = 3;
             }
         }
 
         void rbSDHSV_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).WorkType = 4;
-                }
+                ((Camera)Cameras[i]).WorkType = 4;
+            }
 
-                grdYCRCB.IsEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
-            }
+            grdYCRCB.IsEnabled = false;
         }
 
         void rbSDHSV_Unchecked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                grdYCRCB.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
-            }
+            grdYCRCB.IsEnabled = true;
         }
 
         void rbHD_Checked(object sender, RoutedEventArgs e)
         {
-            try
+            for (int i = 0; i < nCameraCount; i++)
             {
-                for (int i = 0; i < nCameraCount; i++)
-                {
-                    ((Camera)Cameras[i]).WorkType = 5;
-                }
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
+                ((Camera)Cameras[i]).WorkType = 5;
             }
         }
 
@@ -388,19 +251,11 @@ namespace HandDetect
 
         void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Camera tmpCamera = new Camera(nCameraCount, this);
+            Camera tmpCamera = new Camera(nCameraCount, this);
 
-                nCameraCount++;
+            nCameraCount++;
 
-                Cameras.Add(tmpCamera);
-            }
-            catch (Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                MessageBox.Show(err);
-            }
+            Cameras.Add(tmpCamera);
         }
     }
 }

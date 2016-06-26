@@ -19,7 +19,6 @@ namespace HandDetect.Class
         Mat imgGray = new Mat();
         Mat imgBinary = new Mat();
         Mat imgColor = new Mat();
-        //Mat imgBackground = new Mat();
         bool IsWork = true;
         int index = 0;
         Mat imgTmpLabels = new Mat();
@@ -34,8 +33,8 @@ namespace HandDetect.Class
 
         MainWindow MW = null;
 
-        CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\haarcascades\haarcascade_frontalface_alt2.xml");
-        //CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\haarcascades\haarcascade_frontalface_alt_tree.xml");
+        //CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\DATA\haarcascade_frontalface_alt2.xml");
+        CascadeClassifier haarCascade = new CascadeClassifier(@"..\..\..\DATA\haarcascade_frontalface_alt_tree.xml");
         Rect[] faces;
 
         public bool IsBlur = false;
@@ -52,39 +51,32 @@ namespace HandDetect.Class
         /// 5: HandDetect
         /// </summary>
         public int WorkType = 0;
-        
+
         public Camera(int _index, MainWindow _mw)
         {
-            try
+            this.index = _index;
+            MW = _mw;
+
+            capture = new VideoCapture(index);
+
+            MW.txtExposure.Text = capture.Exposure.ToString();
+
+            bs = BackgroundSubtractorMOG2.Create();
+
+            if (!capture.IsOpened())
             {
-                this.index = _index;
-                capture = new VideoCapture(index);
-                bs = BackgroundSubtractorMOG2.Create();
-                MW = _mw;
-
-                if (!capture.IsOpened())
-                {
-                    System.Windows.MessageBox.Show("연결 실패");
-                    return;
-                }
-
-                //capture.Set(CaptureProperty.FrameWidth, 640);
-                //capture.Set(CaptureProperty.FrameHeight, 480);
-
-                //source = new Mat();
-                //source = new Mat(640, 480, MatType.CV_8UC3);
-                //source = new Mat(640, 480, MatType.CV_64FC3);
-
-                bw.DoWork += Bw_DoWork;
-
-                bw.RunWorkerAsync();
-            }
-            catch(Exception ex)
-            {
-                string err = ex.Message + "\r\n" + ex.StackTrace;
-                System.Windows.MessageBox.Show(err);
+                System.Windows.MessageBox.Show("연결 실패");
+                return;
             }
 
+            bw.DoWork += Bw_DoWork;
+
+            bw.RunWorkerAsync();
+        }
+
+        public void SetExpocure(int Exposure)
+        {
+            capture.Exposure = Exposure;
         }
 
         private void Bw_DoWork(object sender, DoWorkEventArgs e)
@@ -104,11 +96,6 @@ namespace HandDetect.Class
                         Cv2.InRange(imgYCRCB, new Scalar(YCRCB.YL, YCRCB.CRL, YCRCB.CBL), new Scalar(YCRCB.YH, YCRCB.CRH, YCRCB.CBH), imgGray);
 
                         Cv2.CvtColor(imgGray, imgColor, ColorConversionCodes.GRAY2BGR);
-
-                        if (this.IsBlur)
-                        {
-                            Cv2.Blur(imgColor, imgColor, new Size(nBlurFactor, nBlurFactor));
-                        }
 
                         int numOfLables = Cv2.ConnectedComponentsWithStats(imgGray, imgTmpLabels, imgTmpStats, imgTmpCentroids, OpenCvSharp.PixelConnectivity.Connectivity8, MatType.CV_32S);
 
@@ -142,9 +129,6 @@ namespace HandDetect.Class
                                 double pointerGrayCount = (centroidy * 640 * 1) + (centroidx * 1);
                                 double pointerColorCount = (centroidy * 640 * 3) + (centroidx * 3);
                             }
-
-                            //Cv2.Rectangle(img_color, new Point(left, top), new Point(left + width, top + height),  new Scalar(0, 0, 255), 1);
-                            //Cv2.PutText(img_color, j.ToString(), new Point(left + 20, top + 20),HersheyFonts.HersheySimplex, 1, new Scalar(255, 0, 0), 2);
                         }
 
                         if (IsLabelColor)
@@ -167,6 +151,10 @@ namespace HandDetect.Class
                             }
                         }
 
+                        if (this.IsBlur)
+                        {
+                            Cv2.Blur(imgColor, imgColor, new Size(nBlurFactor, nBlurFactor));
+                        }
 
                         Cv2.Rectangle(imgColor, new Point(maxRect.Left, maxRect.Top), new Point(maxRect.Left + maxRect.Width, maxRect.Top + maxRect.Height), new Scalar(0, 0, 255), 1);
 
@@ -174,13 +162,10 @@ namespace HandDetect.Class
                         string textMsg1 = "Width: " + maxRect.Width + ", Height: " + maxRect.Height;
                         string textMsg2 = "Size: " + maxRect.Width * maxRect.Height;
 
-                        //OpenCvSharp.HersheyFonts.HersheyComplexSmall
-                        //Cv2.PutText(labelColor, textMsg, new Point(maxRect.Left + 20, maxRect.Top + 20), HersheyFonts.HersheySimplex, 1, new Scalar(0, 0, 255));
                         Cv2.PutText(imgColor, textMsg0, new Point(20, 20), OpenCvSharp.HersheyFonts.HersheyPlain, 1, new Scalar(0, 0, 255));
                         Cv2.PutText(imgColor, textMsg1, new Point(20, 40), OpenCvSharp.HersheyFonts.HersheyPlain, 1, new Scalar(0, 0, 255));
                         Cv2.PutText(imgColor, textMsg2, new Point(20, 60), OpenCvSharp.HersheyFonts.HersheyPlain, 1, new Scalar(0, 0, 255));
 
-                        //Cv2.ImShow(index.ToString(), source);
                         Cv2.ImShow(index.ToString(), imgColor);
 
                         int c = Cv2.WaitKey(10);
@@ -208,7 +193,7 @@ namespace HandDetect.Class
 
                         if (this.IsBlur)
                         {
-                            Cv2.Blur(imgSource, imgSource, new Size(nBlurFactor * 3, nBlurFactor * 3));
+                            Cv2.Blur(imgSource, imgSource, new Size(nBlurFactor, nBlurFactor));
                         }
                         
                         faces = haarCascade.DetectMultiScale(imgGray, 1.08, 2, HaarDetectionType.ScaleImage, new OpenCvSharp.Size(30, 30));
@@ -277,15 +262,12 @@ namespace HandDetect.Class
                         Cv2.CvtColor(imgSource, imgHSV, ColorConversionCodes.BGR2HSV_FULL);
 
                         //Cv2.InRange(imgHSV, new Scalar(0, 10, 60), new Scalar(20, 150, 255), imgGray);
-
                         //Cv2.InRange(imgHSV, new Scalar(0, 40, 60), new Scalar(20, 150, 255), imgGray);
 
-                        //is it Same
                         //Cv2.InRange(imgHSV, new Scalar(0, 0.28 * 255, 0), new Scalar(25, 0.68 * 255, 255), imgGray);
                         Cv2.InRange(imgHSV, new Scalar(0, 71.4, 0), new Scalar(25, 173.4, 255), imgGray);
 
                         //Cv2.InRange(imgHSV, new Scalar(0, 48, 80), new Scalar(20, 255, 255), imgGray);
-
                         //Cv2.InRange(imgHSV, new Scalar(0, 50, 80), new Scalar(120, 255, 255), imgGray);
 
                         Cv2.CvtColor(imgGray, imgColor, ColorConversionCodes.GRAY2BGR);
@@ -303,7 +285,7 @@ namespace HandDetect.Class
                         //라벨링 된 이미지에 각각 직사각형으로 둘러싸기 
                         for (int j = 1; j < numOfLables; j++)
                         {
-                            //int area = stats.At<int>(j, (int)ConnectedComponentsTypes.Area);
+                            //int area = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Area);
                             int left = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Left);
                             int top = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Top);
                             int width = imgTmpStats.At<int>(j, (int)ConnectedComponentsTypes.Width);
@@ -319,9 +301,6 @@ namespace HandDetect.Class
                                 maxRect.Width = width;
                                 maxRect.Height = height;
                             }
-
-                            //Cv2.Rectangle(img_color, new Point(left, top), new Point(left + width, top + height),  new Scalar(0, 0, 255), 1);
-                            //Cv2.PutText(img_color, j.ToString(), new Point(left + 20, top + 20),HersheyFonts.HersheySimplex, 1, new Scalar(255, 0, 0), 2);
                         }
 
                         Cv2.Rectangle(imgColor, new Point(maxRect.Left, maxRect.Top), new Point(maxRect.Left + maxRect.Width, maxRect.Top + maxRect.Height), new Scalar(0, 0, 255), 1);
@@ -330,13 +309,10 @@ namespace HandDetect.Class
                         string textMsg1 = "Width: " + maxRect.Width + ", Height: " + maxRect.Height;
                         string textMsg2 = "Size: " + maxRect.Width * maxRect.Height;
 
-                        //OpenCvSharp.HersheyFonts.HersheyComplexSmall
-                        //Cv2.PutText(labelColor, textMsg, new Point(maxRect.Left + 20, maxRect.Top + 20), HersheyFonts.HersheySimplex, 1, new Scalar(0, 0, 255));
                         Cv2.PutText(imgColor, textMsg0, new Point(20, 20), OpenCvSharp.HersheyFonts.HersheyPlain, 1, new Scalar(0, 0, 255));
                         Cv2.PutText(imgColor, textMsg1, new Point(20, 40), OpenCvSharp.HersheyFonts.HersheyPlain, 1, new Scalar(0, 0, 255));
                         Cv2.PutText(imgColor, textMsg2, new Point(20, 60), OpenCvSharp.HersheyFonts.HersheyPlain, 1, new Scalar(0, 0, 255));
 
-                        //Cv2.ImShow(index.ToString(), source);
                         Cv2.ImShow(index.ToString(), imgColor);
 
                         int c = Cv2.WaitKey(10);
