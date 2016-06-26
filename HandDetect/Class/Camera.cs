@@ -191,12 +191,13 @@ namespace HandDetect.Class
                     {
                         Cv2.CvtColor(imgSource, imgGray, ColorConversionCodes.BGR2GRAY);
 
+                        faces = haarCascade.DetectMultiScale(imgGray, 1.08, 2, HaarDetectionType.ScaleImage, new OpenCvSharp.Size(30, 30));
+
+#if false
                         if (this.IsBlur)
                         {
                             Cv2.Blur(imgSource, imgSource, new Size(nBlurFactor, nBlurFactor));
                         }
-                        
-                        faces = haarCascade.DetectMultiScale(imgGray, 1.08, 2, HaarDetectionType.ScaleImage, new OpenCvSharp.Size(30, 30));
 
                         foreach (Rect face in faces)
                         {
@@ -214,7 +215,33 @@ namespace HandDetect.Class
                         }
 
                         Cv2.ImShow(index.ToString(), imgSource);
+#else
+                        imgBinary = imgGray.Threshold(0, 255, ThresholdTypes.Otsu | ThresholdTypes.Binary);
 
+                        Cv2.CvtColor(imgBinary, imgColor, ColorConversionCodes.GRAY2BGR);
+
+                        if (this.IsBlur)
+                        {
+                            Cv2.Blur(imgColor, imgColor, new Size(nBlurFactor, nBlurFactor));
+                        }
+
+                        foreach (Rect face in faces)
+                        {
+                            var pt1 = new OpenCvSharp.Point
+                            {
+                                X = face.X,
+                                Y = face.Y
+                            };
+                            var pt2 = new OpenCvSharp.Point
+                            {
+                                X = face.X + face.Width,
+                                Y = face.Y + face.Height
+                            };
+                            Cv2.Rectangle(imgColor, pt1, pt2, new Scalar(0, 255, 0), 2);
+                        }
+
+                        Cv2.ImShow(index.ToString(), imgColor);
+#endif
                         int c = Cv2.WaitKey(10);
 
                         if (c != -1) { break; }
