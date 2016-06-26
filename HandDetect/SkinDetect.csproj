@@ -103,6 +103,20 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\build\OpenCvSharp3-AnyCPU.props" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.Blob.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.Blob.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.Blob.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.Blob.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.dll.config" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\OpenCvSharp3-AnyCPU.3.1.0.20160622.nupkg" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\OpenCvSharp3-AnyCPU.3.1.0.20160622.nuspec" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\tools\init.ps1" />
+    <None Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\tools\uninstall.ps1" />
+    <None Include="packages\repositories.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -119,6 +133,44 @@
     <Resource Include="DATA\haarcascade_frontalface_alt_tree.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.Blob.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.Blob.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.UserInterface.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net20\OpenCvSharp.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.Blob.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.Blob.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.Extensions.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.Extensions.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.UserInterface.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net35\OpenCvSharp.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.Blob.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.Blob.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.Extensions.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.Extensions.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.UserInterface.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net40\OpenCvSharp.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.Blob.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.Blob.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.Extensions.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.Extensions.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.UserInterface.dll" />
+    <Resource Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\lib\net45\OpenCvSharp.XML" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x64\msvcp120.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x64\msvcr120.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x64\OpenCvSharpExtern.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x64\opencv_ffmpeg310_64.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x64\opencv_world310.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x86\msvcp120.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x86\msvcr120.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x86\OpenCvSharpExtern.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x86\opencv_ffmpeg310.dll" />
+    <Content Include="packages\OpenCvSharp3-AnyCPU.3.1.0.20160622\NativeDlls\x86\opencv_world310.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
